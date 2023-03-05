@@ -1,0 +1,180 @@
+---
+- name: "Workstation"
+  hosts: localhost
+  gather_facts: true
+  handlers:
+    - name: restart-libvirtd
+      systemd:
+        name: libvirtd
+        enabled: yes
+        daemon_reload: yes
+        state: restarted
+  tasks:
+    - name: Set a hostname 
+      hostname:
+        name: workstation
+    - name: add workstation to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '^127\.0\.0\.1[ \t]+'
+        line: '127.0.0.1 localhost workstation workstation.mordasiewicz.com'
+        state: present
+    - name: add workstation to /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '^127\.0\.1\.1[ \t]+'
+        line: '127.0.1.1 localhost workstation workstation.mordasiewicz.com'
+        state: present
+    - name: GPG Keys
+      block:
+        - name: google-chrome
+          ansible.builtin.get_url:
+            url: https://dl.google.com/linux/linux_signing_key.pub
+            dest: /etc/apt/trusted.gpg.d/google-chrome.asc
+        - name: kubernetes
+          ansible.builtin.get_url:
+            url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+            dest: /etc/apt/trusted.gpg.d/kubernetes.asc
+        - name: docker
+          ansible.builtin.get_url:
+            url: https://download.docker.com/linux/ubuntu/gpg
+            dest: /etc/apt/trusted.gpg.d/docker.asc
+        - name: github-cli
+          ansible.builtin.get_url:
+            url: https://cli.github.com/packages/githubcli-archive-keyring.gpg 
+            dest: /etc/apt/trusted.gpg.d/github-cli.asc
+        - name: hashicorp
+          ansible.builtin.get_url:
+            url: https://apt.releases.hashicorp.com/gpg
+            dest: /etc/apt/trusted.gpg.d/hashicorp.asc
+    - name: Add vscode repo
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64 ] https://packages.microsoft.com/repos/vscode stable main
+        state: present
+        filename: vscode
+    - name: Add google repo
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
+        state: present
+        filename: google-chrome
+    - name: Add kubernetes repo
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64 ] https://apt.kubernetes.io/ kubernetes-xenial main
+        state: present
+        filename: kubernetes
+    - name: Add docker repo
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/linux/ubuntu jammy stable
+        state: present
+        filename: docker
+    - name: Add github-cli repo
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://cli.github.com/packages stable main
+        state: present
+        filename: github-cli
+    - name: Add hashicorp repo
+      ansible.builtin.apt_repository:
+        repo: deb https://apt.releases.hashicorp.com jammy main
+        state: present
+        filename: hashicorp
+    - name: Update apt
+      apt:
+        upgrade: dist
+        autoremove: true
+        autoclean: true
+        update_cache: true
+    - name: Required Software
+      apt:
+        pkg:
+          - git
+          - vim
+          - zsh
+          - software-properties-common
+          - gnupg2
+          - curl
+          - apt-transport-https
+          - genisoimage
+          - gnupg-agent
+          - ca-certificates
+          - lsb-release
+          - bash-completion
+          - wget
+          - jq
+          - yamllint
+          - moreutils
+          - python3-sphinx
+          - python3-pip
+          - python3-venv
+          - python3-cryptography
+          - python3-openssl
+          - python3-yaml
+          - python3
+          - build-essential
+          - fonts-powerline
+          - powerline
+          - fzf
+          - speedtest-cli
+          - kubectl
+          - docker-ce
+          - gh
+          - terraform
+          - byobu
+          - elinks
+          - google-chrome-stable
+          - nfs-common
+          - mkisofs
+          - code
+          - qemu-utils
+          - qemu-kvm
+          - python3-libvirt
+          - python3-lxml
+          - libvirt-dev
+          - libvirt-daemon-system
+          - libvirt-clients
+          - libosinfo-bin
+          - libnss-libvirt
+          - libguestfs-tools
+          - virtinst
+          - virt-manager
+    - name: Enable service libvirt, and start if not started
+      service:
+        name: libvirtd
+        enabled: yes
+        state: started
+    - name: gather facts on existing virsh pool
+      virt_pool:
+        command: facts
+        uri: qemu:///system
+    - name: create a image_pool_dir
+      file:
+        path: /var/lib/libvirt/images
+        owner: root
+        group: libvirt
+        recurse: yes
+        mode: '0755'
+      become: true
+    - name: security_driver = "none" in qemu.conf
+      ini_file:
+        path: /etc/libvirt/qemu.conf
+        section: null
+        option: security_driver
+        value: "'none'"
+        mode: '0600'
+        backup: no
+      notify: restart-libvirtd
+    - name: Users
+      user: 
+        name: robin
+        uid: 502
+        shell: /bin/zsh
+        comment: "Robin Mordasiewicz"
+        create_home: false
+        group: mordasiewicz
+        groups: libvirt,libvirt-qemu,adm,cdrom,sudo,dip,plugdev,kvm,lpadmin,sambashare,docker,sudo
+    - name: Allow 'sudo' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%sudo'
+        line: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        validate: visudo -cf %s
