@@ -137,6 +137,7 @@
           - virtinst
           - virt-manager
           - packer
+          - tigervnc-tools
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
