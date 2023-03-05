@@ -136,6 +136,7 @@
           - libguestfs-tools
           - virtinst
           - virt-manager
+          - packer
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
