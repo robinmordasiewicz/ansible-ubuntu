@@ -138,6 +138,7 @@
           - virt-manager
           - packer
           - tigervnc-tools
+          - xsltproc
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
