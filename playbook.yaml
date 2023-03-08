@@ -139,8 +139,6 @@
           - packer
           - tigervnc-tools
           - xsltproc
-          - cockpit
-          - cockpit-machines
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
