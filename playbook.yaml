@@ -118,6 +118,7 @@
           - docker-ce
           - gh
           - terraform
+          - vault
           - byobu
           - elinks
           - google-chrome-stable
@@ -139,6 +140,7 @@
           - packer
           - tigervnc-tools
           - xsltproc
+          - python3-powerline
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
