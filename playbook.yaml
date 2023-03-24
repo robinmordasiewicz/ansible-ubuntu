@@ -138,6 +138,7 @@
           - virtinst
           - virt-manager
           - packer
+          - consul
           - tigervnc-tools
           - xsltproc
           - python3-powerline
@@ -183,3 +184,7 @@
         regexp: '^%sudo'
         line: '%sudo ALL=(ALL) NOPASSWD: ALL'
         validate: visudo -cf %s
+    - name: Install shell-gpt
+      pip:
+        name: shell-gpt
+
