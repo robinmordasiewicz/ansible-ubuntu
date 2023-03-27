@@ -167,7 +167,7 @@
         owner: root
         group: libvirt
         recurse: yes
-        mode: '0755'
+        mode: '0775'
       become: true
     - name: security_driver = "none" in qemu.conf
       ini_file:
