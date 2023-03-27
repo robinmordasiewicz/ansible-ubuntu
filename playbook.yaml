@@ -142,6 +142,16 @@
           - tigervnc-tools
           - xsltproc
           - python3-powerline
+    - name: Disable docker.service
+      service:
+        name: docker.service
+        enabled: no
+        state: stopped
+    - name: Disable docker.socket
+      service:
+        name: docker.socket
+        enabled: no
+        state: stopped
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
