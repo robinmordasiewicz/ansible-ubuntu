@@ -139,6 +139,7 @@
           - virt-manager
           - packer
           - consul
+          - vagrant
           - tigervnc-tools
           - xsltproc
           - python3-powerline
