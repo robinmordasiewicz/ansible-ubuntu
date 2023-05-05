@@ -147,6 +147,7 @@
           - tigervnc-tools
           - xsltproc
           - python3-powerline
+          - npm
     - name: Disable docker.service
       service:
         name: docker.service
@@ -202,4 +203,8 @@
     - name: Install shell-gpt
       pip:
         name: shell-gpt
+    - name: Install resume-cli
+      npm:
+        name: resume-cli
+        global: true
 
