@@ -148,6 +148,7 @@
           - xsltproc
           - python3-powerline
           - npm
+          - libnss3-tools
     - name: Disable docker.service
       service:
         name: docker.service
