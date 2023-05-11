@@ -121,8 +121,6 @@
           - docker-buildx-plugin
           - docker-compose-plugin
           - gh
-          - terraform
-          - vault
           - byobu
           - elinks
           - google-chrome-stable
@@ -142,13 +140,17 @@
           - virtinst
           - virt-manager
           - packer
+          - sentinel
           - consul
           - vagrant
+          - terraform
+          - vault
           - tigervnc-tools
           - xsltproc
           - python3-powerline
           - npm
           - libnss3-tools
+          - asciinema
     - name: Disable docker.service
       service:
         name: docker.service
