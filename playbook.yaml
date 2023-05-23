@@ -152,6 +152,7 @@
           - libnss3-tools
           - asciinema
           - lolcat
+          - golang-go
     - name: Disable docker.service
       service:
         name: docker.service
