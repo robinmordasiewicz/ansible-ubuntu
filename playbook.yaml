@@ -153,6 +153,10 @@
           - asciinema
           - lolcat
           - golang-go
+          - fakeroot
+          - isolinux
+          - binutils
+          - squashfs-tools
     - name: Disable docker.service
       service:
         name: docker.service
