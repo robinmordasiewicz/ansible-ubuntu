@@ -28,52 +28,63 @@
     - name: GPG Keys
       block:
         - name: google-chrome
-          ansible.builtin.get_url:
+          get_url:
             url: https://dl.google.com/linux/linux_signing_key.pub
             dest: /etc/apt/trusted.gpg.d/google-chrome.asc
         - name: kubernetes
-          ansible.builtin.get_url:
+          get_url:
             url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
             dest: /etc/apt/trusted.gpg.d/kubernetes.asc
         - name: docker
-          ansible.builtin.get_url:
+          get_url:
             url: https://download.docker.com/linux/ubuntu/gpg
             dest: /etc/apt/trusted.gpg.d/docker.asc
         - name: github-cli
-          ansible.builtin.get_url:
+          get_url:
             url: https://cli.github.com/packages/githubcli-archive-keyring.gpg 
             dest: /etc/apt/trusted.gpg.d/github-cli.asc
         - name: hashicorp
-          ansible.builtin.get_url:
+          get_url:
             url: https://apt.releases.hashicorp.com/gpg
             dest: /etc/apt/trusted.gpg.d/hashicorp.asc
+        - name: microsoft
+          get_url:
+            url: https://packages.microsoft.com/keys/microsoft.asc
+            dest: /etc/apt/trusted.gpg.d/microsoft.asc
+            mode: '0644'
+            force: true            
+    - name: Add azure cli repo
+      apt_repository:
+        repo: deb [arch=`dpkg --print-architecture` signed-by=/etc/apt/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ jammy main
+        state: present
+        filename: microsoft
     - name: Add vscode repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb [arch=amd64 ] https://packages.microsoft.com/repos/vscode stable main
         state: present
         filename: vscode
     - name: Add google repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main
         state: present
         filename: google-chrome
     - name: Add kubernetes repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb [arch=amd64 ] https://apt.kubernetes.io/ kubernetes-xenial main
         state: present
         filename: kubernetes
     - name: Add docker repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/docker.asc] https://download.docker.com/linux/ubuntu jammy stable
         state: present
         filename: docker
     - name: Add github-cli repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb [arch=amd64] https://cli.github.com/packages stable main
         state: present
         filename: github-cli
     - name: Add hashicorp repo
-      ansible.builtin.apt_repository:
+      apt_repository:
         repo: deb https://apt.releases.hashicorp.com jammy main
         state: present
         filename: hashicorp
@@ -86,6 +97,7 @@
     - name: Required Software
       apt:
         pkg:
+          - azure-cli
           - git
           - vim
           - zsh
