@@ -179,6 +179,22 @@
         name: docker.socket
         enabled: no
         state: stopped
+    - name: Add br_netfilter
+      modprobe:
+        name: br_netfilter
+        state: present
+    - name: Creating br_netfilter.conf
+      copy:
+        dest: "/etc/modules-load.d/br_netfilter.conf"
+        content: |
+          br_netfilter
+    - name: Creating 10-bridge.conf
+      copy:
+        dest: "/etc/sysctl.d/10-bridge.conf"
+        content: |
+          net.bridge.bridge-nf-call-ip6tables=0
+          net.bridge.bridge-nf-call-iptables=0
+          net.bridge.bridge-nf-call-arptables=0
     - name: Enable service libvirt, and start if not started
       service:
         name: libvirtd
