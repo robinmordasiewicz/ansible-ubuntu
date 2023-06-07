@@ -97,23 +97,55 @@
     - name: Required Software
       apt:
         pkg:
-          - azure-cli
-          - git
-          - vim
-          - zsh
-          - software-properties-common
-          - gnupg2
-          - curl
           - apt-transport-https
+          - asciinema
+          - azure-cli
+          - bash-completion
+          - binutils
+          - build-essential
+          - byobu
+          - ca-certificates
+          - code
+          - consul
+          - containerd.io
+          - curl
+          - docker-buildx-plugin
+          - docker-compose-plugin
+          - docker-ce
+          - docker-ce-cli
+          - elinks
+          - fakeroot
+          - fonts-powerline
+          - fzf
+          - gh
+          - git
           - genisoimage
           - gnupg-agent
-          - ca-certificates
-          - lsb-release
-          - bash-completion
-          - wget
+          - golang-go
+          - google-chrome-stable
+          - gnupg2
+          - hugo
+          - isolinux
           - jq
-          - yamllint
+          - kubectl
+          - libnss3-tools
+          - libvirt-dev
+          - libvirt-daemon-system
+          - libvirt-clients
+          - libosinfo-bin
+          - libnss-libvirt
+          - libguestfs-tools
+          - lolcat
+          - lsb-release
+          - mkisofs
           - moreutils
+          - nfs-common
+          - npm
+          - packer
+          - powerline
+          - python3-libvirt
+          - python3-lxml
+          - python3-powerline
           - python3-sphinx
           - python3-pip
           - python3-venv
@@ -121,54 +153,23 @@
           - python3-openssl
           - python3-yaml
           - python3
-          - build-essential
-          - fonts-powerline
-          - powerline
-          - fzf
-          - speedtest-cli
-          - kubectl
-          - docker-ce
-          - docker-ce-cli
-          - containerd.io
-          - docker-buildx-plugin
-          - docker-compose-plugin
-          - gh
-          - byobu
-          - elinks
-          - google-chrome-stable
-          - nfs-common
-          - mkisofs
-          - code
           - qemu-utils
           - qemu-kvm
-          - python3-libvirt
-          - python3-lxml
-          - libvirt-dev
-          - libvirt-daemon-system
-          - libvirt-clients
-          - libosinfo-bin
-          - libnss-libvirt
-          - libguestfs-tools
+          - sentinel
+          - software-properties-common
+          - speedtest-cli
+          - squashfs-tools
+          - terraform
+          - tigervnc-tools
+          - vagrant
+          - vault
           - virtinst
           - virt-manager
-          - packer
-          - sentinel
-          - consul
-          - vagrant
-          - terraform
-          - vault
-          - tigervnc-tools
+          - vim
+          - wget
           - xsltproc
-          - python3-powerline
-          - npm
-          - libnss3-tools
-          - asciinema
-          - lolcat
-          - golang-go
-          - fakeroot
-          - isolinux
-          - binutils
-          - squashfs-tools
+          - yamllint
+          - zsh
     - name: Disable docker.service
       service:
         name: docker.service
