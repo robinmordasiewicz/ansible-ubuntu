@@ -106,6 +106,7 @@
           - byobu
           - ca-certificates
           - code
+          - checkinstall
           - consul
           - containerd.io
           - curl
@@ -134,6 +135,7 @@
           - libvirt-clients
           - libosinfo-bin
           - libnss-libvirt
+          - libssl-dev
           - libguestfs-tools
           - lolcat
           - lsb-release
@@ -158,6 +160,7 @@
           - sentinel
           - software-properties-common
           - speedtest-cli
+          - sphinx
           - squashfs-tools
           - terraform
           - tigervnc-tools
