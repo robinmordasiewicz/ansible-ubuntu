@@ -58,9 +58,14 @@
             repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/microsoft.asc] https://packages.microsoft.com/repos/azure-cli/ jammy main
             state: present
             filename: microsoft
+    - name: Add microsoft general repo
+      apt_repository:
+        repo: deb [arch=amd64] https://packages.microsoft.com/ubuntu/22.04/prod jammy main
+        state: present
+        filename: microsoft-general
     - name: Add vscode repo
       apt_repository:
-        repo: deb [arch=amd64 ] https://packages.microsoft.com/repos/vscode stable main
+        repo: deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main
         state: present
         filename: vscode
     - name: Add google repo
@@ -100,6 +105,7 @@
           - apt-transport-https
           - asciinema
           - azure-cli
+          - aztfexport
           - bash-completion
           - binutils
           - build-essential
